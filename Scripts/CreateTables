@@ -1,0 +1,22 @@
+/*  SessionId is the randomly generated number for each session
+    SessionInfo has the metadata info for sessions
+*/
+CREATE TABLE Sessions (
+    SessionId int NOT NULL PRIMARY KEY,
+    SessionInfo varchar(8000), 
+);
+
+
+/*  PackageId is the id for each package that is auto-incremented
+    TrackingId is the tracking number for the package
+    Carrier is the carrier after lookup
+    LastStatus is the last status of the lookup
+    Foreign key - SessionId is the session the package is associated with
+*/
+CREATE TABLE Packages (
+    PackageId int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    TrackingId varchar(8000),
+    Carrier varchar(8000),
+    LastStatus varchar(8000),
+    SessionId int FOREIGN KEY REFERENCES Sessions(SessionId)
+);
