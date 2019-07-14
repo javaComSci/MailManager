@@ -1,37 +1,53 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { Button } from '@material-ui/core';
 
 export class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false,
+            redirectToNewSession: false,
+            redirectToLogin: false, 
         }
     }
 
-
-    handleOnClick = () => {
-        console.log("here");
+    handleOnClickNewSession = () => {
+        console.log("new session");
         this.setState({
-            redirect: true,
+            redirectToNewSession: true,
+        })
+    }
+
+    handleOnClickLogin = () => {
+        console.log("login");
+        this.setState({
+            redirectToLogin: true,
         })
     }
 
     render() {
-        if (this.state.redirect) {
+        if (this.state.redirectToNewSession) {
             return (<Redirect
                 to={{
-                    pathname: "/sessions",
+                    pathname: "/newSession",
+                }}
+            />);
+        } else if (this.state.redirectToLogin) {
+            return (<Redirect
+                to={{
+                    pathname: "/login",
                 }}
             />);
         } else {
             return (<div>
                 Package Manager
-                <button color="primary" onClick={() => this.handleOnClick()}>
-                   Manage packages
-                </button>
+                <Button color="primary" variant="contained" onClick={() => this.handleOnClickNewSession()}>
+                   Create New Session
+                </Button>
+                <Button color="primary" variant="contained" onClick={() => this.handleOnClickLogin()}>
+                   Login
+                </Button>
             </div>);
         }
-
     }
 }

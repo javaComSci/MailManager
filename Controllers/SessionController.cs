@@ -35,6 +35,29 @@ namespace mail_manager.Controllers
             }
 
             // unable to create that session
+            return BadRequest();
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult CheckSessionId([FromBody] SessionId sessionInfo)
+        {
+            bool resStatus = false;
+            try
+            {
+                resStatus = SQLConnections.CheckSessionId(sessionInfo.sessionId);
+            }
+            catch
+            {
+                Console.WriteLine("Error finding session id");
+            }
+
+            if (resStatus)
+            {
+                // sucessfully created that session
+                return Ok(sessionInfo);
+            }
+
+            // unable to find that session
             return NotFound();
         }
 
